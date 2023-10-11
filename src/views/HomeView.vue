@@ -1,10 +1,10 @@
 <!-- <template>
   <div>
     <div>
-      <input v-model="newTodo" @keyup.enter="addTodo" placeholder="Add a new task" />
+      <input v-model="search" placeholder="Search tasks" />
     </div>
     <div>
-      <input v-model="search" placeholder="Search tasks" />
+      <input v-model="newTodo" @keyup.enter="addTodo" placeholder="Add a new task" />
     </div>
     <div v-for="(todo, index) in filteredTodos" :key="index">
       <TodoItem
@@ -71,21 +71,18 @@ export default {
 
 
 <template>
-  <div>
-    <div>
-      <input v-model="newTodo" @keyup.enter="addTodo" placeholder="Add a new task" />
-    </div>
-    <div>
-      <input v-model="search" placeholder="Search tasks" />
-    </div>
-    <div v-for="(todo, index) in filteredTodos" :key="index">
-      <TodoItem
-        :todo="todo"
-        @delete="deleteTodo(index)"
-        @edit="editTodo(index, $event)"
-      />
-    </div>
-  </div>
+  <v-row justify="center" align="center" style="height: 100vh">
+    <v-col cols="12" sm="4">
+      <v-text-field :loading="loading" density="compact" variant="solo" label="Search" single-line hide-details
+        v-model="search" @keydown="searchHandler()"></v-text-field>
+
+      <v-text-field  class="mt-5" density="compact" variant="solo" @keyup.enter="addTodo" label="Add a new task" v-model="newTodo" ></v-text-field>
+
+      <div v-for="(todo, index) in filteredTodos" :key="index">
+        <TodoItem :todo="todo" @delete="deleteTodo(index)" @edit="editTodo(index, $event)" />
+      </div>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -97,6 +94,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       newTodo: '',
       search: '',
       todos: [],
@@ -105,6 +103,13 @@ export default {
     };
   },
   methods: {
+    searchHandler() {
+      this.loading = true
+
+      setTimeout(() => {
+        this.loading = false
+      }, 2000)
+    },
     addTodo() {
       if (this.newTodo.trim() !== '') {
         this.todos.push({ text: this.newTodo, done: false });

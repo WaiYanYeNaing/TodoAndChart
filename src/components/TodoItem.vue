@@ -1,16 +1,45 @@
 <template>
   <div>
-    <div v-if="editing">
+    <!-- <div v-if="editing">
       <input v-model="editingText" @keyup.enter="saveEdit" @keyup.esc="cancelEdit" />
       <button @click="saveEdit">Save</button>
       <button @click="cancelEdit">Cancel</button>
-    </div>
-    <div v-else>
+    </div> -->
+    <!-- <div v-else>
       <input type="checkbox" v-model="todo.done" />
       <span :class="{ done: todo.done }">{{ todo.text }}</span>
       <button @click="edit">Edit</button>
       <button @click="$emit('delete')">Delete</button>
-    </div>
+    </div> -->
+    <!-- <v-row align="center">  
+        <v-col cols="1"> 
+          <v-checkbox-btn 
+            v-model="todo.done" 
+          ></v-checkbox-btn>
+        </v-col>
+        <span :class="{ done: todo.done }">{{ todo.text }}</span>
+        <button @click="edit">Edit</button>
+        <button @click="$emit('delete')">Delete</button>  
+    </v-row> -->
+
+    <v-layout v-if="editing">
+      <v-flex>
+        <input v-model="editingText" @keyup.enter="saveEdit" @keyup.esc="cancelEdit" />
+      </v-flex>
+
+      <v-spacer />
+      <v-btn @click="saveEdit" icon="mdi-content-save-all" size="x-small" class="mr-3"></v-btn>
+      <v-btn @click="cancelEdit" icon="mdi-cancel" size="x-small"></v-btn>
+    </v-layout>
+    <v-layout class="align-center" v-else>
+      <v-flex>
+        <v-checkbox-btn v-model="todo.done"></v-checkbox-btn>
+      </v-flex>
+      <span :class="{ done: todo.done }">{{ todo.text }}</span>
+      <v-spacer />
+      <v-btn @click="edit" icon="mdi-book-edit" size="x-small" class="mr-3"></v-btn>
+      <v-btn @click="$emit('delete')" icon="mdi-delete-alert" size="x-small"></v-btn>
+    </v-layout>
   </div>
 </template>
 
@@ -41,7 +70,7 @@ export default {
 </script>
 
 <style scoped>
-  .done {
-    text-decoration: line-through;
-  }
+.done {
+  text-decoration: line-through;
+}
 </style>
