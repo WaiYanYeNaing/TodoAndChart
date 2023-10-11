@@ -8,8 +8,9 @@
         @click="rail = false"
       >
         <v-list-item
-          prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
+          prepend-icon="mdi-menu" 
           title="John Leider"
+          class="ml-2"
           nav
         >
           <template v-slot:append>

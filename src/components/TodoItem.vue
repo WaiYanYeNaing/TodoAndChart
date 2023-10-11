@@ -22,16 +22,15 @@
         <button @click="$emit('delete')">Delete</button>  
     </v-row> -->
 
-    <v-layout v-if="editing">
-      <v-flex>
-        <input v-model="editingText" @keyup.enter="saveEdit" @keyup.esc="cancelEdit" />
-      </v-flex>
-
-      <v-spacer />
+    <v-layout class="align-center" v-if="editing" style="height: 40px">
+      <v-flex class="flex-grow-1 flex-shrink-0">
+        <input v-model="editingText" @keyup.enter="saveEdit" @keyup.esc="cancelEdit" style="width: -webkit-fill-available; padding: 0 10px;" class="mr-5" />
+      </v-flex>  
       <v-btn @click="saveEdit" icon="mdi-content-save-all" size="x-small" class="mr-3"></v-btn>
       <v-btn @click="cancelEdit" icon="mdi-cancel" size="x-small"></v-btn>
     </v-layout>
-    <v-layout class="align-center" v-else>
+
+    <v-layout class="align-center" v-else style="height: 40px">
       <v-flex>
         <v-checkbox-btn v-model="todo.done"></v-checkbox-btn>
       </v-flex>
