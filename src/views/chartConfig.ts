@@ -1,3 +1,4 @@
+// Data object for the chart
 export const data = {
   labels: [
     "1 is January",
@@ -23,6 +24,7 @@ export const data = {
   ],
 };
 
+// Options object for configuring the chart
 export const options = {
   responsive: true,
   maintainAspectRatio: true,
