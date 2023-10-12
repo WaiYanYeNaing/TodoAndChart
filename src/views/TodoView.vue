@@ -4,7 +4,7 @@
       <h1 class="font-weight-bold">Todo List</h1>
       <v-row class="mt-10" align="center">
         <v-text-field
-          rounded="xl"
+          rounded="lg"
           append-inner-icon="mdi-magnify"
           :loading="loading"
           density="compact"
@@ -13,33 +13,36 @@
           single-line
           hide-details
           v-model="search"
-          @keydown="searchHandler()"
+          @keydown="searchHandler"
           class="mx-2 mb-2"
-          style="min-width: 240px;"
+          style="min-width: 240px"
         ></v-text-field>
 
-        <v-btn-toggle :style="`height: 38px; ${$vuetify.display.xs && 'scale: 90%;'}`" v-model="active" class="mb-2"> 
+        <v-btn-toggle :style="buttonStyle" v-model="active" class="mb-2">
           <v-btn
             @click="filterTodos('all')"
             rounded="xl"
-            :color="filter === 'all' ? 'blue' : ''"
-            :class="`${!$vuetify.display.xs && 'mx-2'}`" 
+            :color="buttonColor('all')"
+            :class="buttonClass"
+            :style="buttonFontSize"
           >
             All
           </v-btn>
           <v-btn
             @click="filterTodos('complete')"
             rounded="xl"
-            :color="filter === 'complete' ? 'success' : ''"
-            class="mx-2" 
+            :color="buttonColor('complete')"
+            :class="buttonClass"
+            :style="buttonFontSize"
           >
             Done
           </v-btn>
           <v-btn
             @click="filterTodos('incomplete')"
             rounded="xl"
-            :color="filter === 'incomplete' ? 'error' : ''"
-            class="mx-2"
+            :color="buttonColor('incomplete')"
+            :class="buttonClass"
+            :style="buttonFontSize"
           >
             Incomplete
           </v-btn>
@@ -47,7 +50,7 @@
       </v-row>
 
       <v-text-field
-        rounded="xl"
+        rounded="lg"
         class="mt-5"
         density="compact"
         variant="solo"
@@ -68,14 +71,14 @@
 </template>
 
 <script>
-import TodoItem from "../components/TodoItem.vue"; 
+import TodoItem from "../components/TodoItem.vue";
 
 export default {
   components: {
     TodoItem,
   },
   data() {
-    return { 
+    return {
       loading: false,
       newTodo: "",
       search: "",
@@ -94,7 +97,29 @@ export default {
       active: 0,
     };
   },
-
+  computed: {
+    filteredTodos() {
+      return this.todos.filter((todo) => {
+        const lowerCaseSearch = this.search.toLowerCase();
+        if (this.filter === "all") {
+          return todo.text.toLowerCase().includes(lowerCaseSearch);
+        } else if (this.filter === "complete") {
+          return todo.done && todo.text.toLowerCase().includes(lowerCaseSearch);
+        } else if (this.filter === "incomplete") {
+          return !todo.done && todo.text.toLowerCase().includes(lowerCaseSearch);
+        }
+      });
+    },
+    buttonStyle() {
+      return `height: 38px; ${this.$vuetify.display.xs ? 'scale: 90%;' : ''}`;
+    },
+    buttonClass() {
+      return this.$vuetify.display.xs ? 'mr-1' : 'mx-2';
+    },
+    buttonFontSize() {
+      return `font-size: ${this.$vuetify.display.xs ? '12px' : ''}`;
+    },
+  },
   methods: {
     searchHandler() {
       this.loading = true;
@@ -124,27 +149,9 @@ export default {
     filterTodos(filterType) {
       this.filter = filterType;
     },
-  },
-  computed: {
-    filteredTodos() {
-      if (this.filter === "all") {
-        return this.todos.filter((todo) =>
-          todo.text.toLowerCase().includes(this.search.toLowerCase())
-        );
-      } else if (this.filter === "complete") {
-        return this.todos.filter(
-          (todo) =>
-            todo.done &&
-            todo.text.toLowerCase().includes(this.search.toLowerCase())
-        );
-      } else if (this.filter === "incomplete") {
-        return this.todos.filter(
-          (todo) =>
-            !todo.done &&
-            todo.text.toLowerCase().includes(this.search.toLowerCase())
-        );
-      }
+    buttonColor(type) {
+      return this.filter === type ? (type === 'all' ? 'blue' : type === 'complete' ? 'success' : 'error') : '';
     },
-  }, 
+  },
 };
 </script>
