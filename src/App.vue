@@ -68,7 +68,7 @@
           ><RouterLink to="/" style="text-decoration: none; color: #93b7be">
             <v-list-item
               :class="{ 'active-item': $route.path === '/' }"
-              prepend-icon="mdi-home-city"
+              prepend-icon="mdi-list-status"
               title="TodoList"
               value="todoList"
             ></v-list-item>
@@ -76,7 +76,7 @@
           <RouterLink to="/chart" style="text-decoration: none; color: #93b7be">
             <v-list-item
               :class="{ 'active-item': $route.path === '/chart' }"
-              prepend-icon="mdi-account"
+              prepend-icon="mdi-chart-areaspline"
               title="Chart"
               value="chart"
             ></v-list-item>
