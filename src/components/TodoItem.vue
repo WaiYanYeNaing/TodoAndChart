@@ -1,28 +1,6 @@
 <template>
-  <div>
-    <!-- <div v-if="editing">
-      <input v-model="editingText" @keyup.enter="saveEdit" @keyup.esc="cancelEdit" />
-      <button @click="saveEdit">Save</button>
-      <button @click="cancelEdit">Cancel</button>
-    </div> -->
-    <!-- <div v-else>
-      <input type="checkbox" v-model="todo.done" />
-      <span :class="{ done: todo.done }">{{ todo.text }}</span>
-      <button @click="edit">Edit</button>
-      <button @click="$emit('delete')">Delete</button>
-    </div> -->
-    <!-- <v-row align="center">  
-        <v-col cols="1"> 
-          <v-checkbox-btn 
-            v-model="todo.done" 
-          ></v-checkbox-btn>
-        </v-col>
-        <span :class="{ done: todo.done }">{{ todo.text }}</span>
-        <button @click="edit">Edit</button>
-        <button @click="$emit('delete')">Delete</button>  
-    </v-row> -->
-
-    <v-layout class="align-center" v-if="editing" style="height: 40px">
+  <div :style="`${$vuetify.display.xs && 'scale: .9'}`">
+    <v-layout class="align-center" v-if="editing" :style="`min-height: ${$vuetify.display.xs ? 50 : 40}px;`">
       <v-flex class="flex-grow-1 flex-shrink-0">
         <input v-model="editingText" @keyup.enter="saveEdit" @keyup.esc="cancelEdit" style="width: -webkit-fill-available; padding: 0 10px;" class="mr-5" />
       </v-flex>  
@@ -30,7 +8,7 @@
       <v-btn @click="cancelEdit" icon="mdi-cancel" size="x-small"></v-btn>
     </v-layout>
 
-    <v-layout class="align-center" v-else style="height: 40px">
+    <v-layout class="align-center" v-else :style="`min-height: ${$vuetify.display.xs ? 50 : 40}px;`">
       <v-flex>
         <v-checkbox-btn v-model="todo.done"></v-checkbox-btn>
       </v-flex>
@@ -42,13 +20,13 @@
   </div>
 </template>
 
-<script>
+<script> 
 export default {
   props: ['todo'],
   data() {
     return {
       editing: false,
-      editingText: "",
+      editingText: "", 
     };
   },
   methods: {

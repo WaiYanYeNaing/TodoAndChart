@@ -1,7 +1,8 @@
 <template>
-  <div style="height: 500px; width: auto">
+  <v-layout class="align-center justify-center" style="height: 100vh;">
+  <div style="height: 300px; width: 800px">
     <Bar :data="data" :options="options" />
-  </div>
+  </div></v-layout>
 </template>
 
 <script lang="ts">
@@ -33,6 +34,6 @@ export default {
   },
   data() {
     return chartConfig;
-  },
+  }, 
 };
 </script>
